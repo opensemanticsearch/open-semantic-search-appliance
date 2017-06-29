@@ -1,0 +1,16 @@
+bash
+grep
+locales
+user-setup
+sudo
+kbd
+console-setup
+bash-completion
+initramfs-tools
+zip
+unzip
+rar
+unrar
+tar
+gzip
+bzip2

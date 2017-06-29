@@ -1,0 +1,9 @@
+curl
+poppler-utils
+tesseract-ocr
+tesseract-ocr-eng
+tesseract-ocr-deu
+scantailor
+apache2
+apache2-mpm-prefork
+swapspace

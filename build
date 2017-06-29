@@ -1,0 +1,10 @@
+#!/bin/bash
+
+image="/build/open-semantic-search.img"
+imagesize="60G"
+vmdebootstrap --mirror=http://ftp.de.debian.org/debian/ --verbose --image=${image} --size=${imagesize} --enable-dhcp --sudo --configure-apt --customize=./customize.sh
+
+#convert raw image to vdi for less file size
+
+#echo 'Convert Image file to VirtualBox format'
+#qemu-img convert -f raw -O vdi ${image} open-semantic-search.vdi
