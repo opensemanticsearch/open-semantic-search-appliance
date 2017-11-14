@@ -47,4 +47,4 @@ config['mappings'] = {
 
 # this option wont change the uri (which is the base of this option and can be mapped and stripped above),
 # it will only change/strip/shorten the path facet in the interactive navigation of the user interface
-#config['facet_path_strip_prefix'] = [ "file:///home/", "file://" ]
+#config['facet_path_strip_prefix'] = [ "file:///media/sf_", "file:///home/", "file://" ]
