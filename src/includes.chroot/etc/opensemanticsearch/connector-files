@@ -16,12 +16,12 @@ config['tmp'] = '/media/sf_index/tmp/'
 
 
 #
-# mapping filename to uri
+# Mapping filename to URI
 #
 
-# if the users have other path (mountpoint with other path then the servers ful path)
-# or protocoll (http instead of file)
-# you can map the servers to the users path
+# if the users have other path (mountpoint with other path then the servers full path)
+# or protocoll (http:// instead of file://)
+# you can map the servers path to the users path
 
 # default: user can access the file system, so /fullpath/filename will be mapped to file:///fullpath/filename
 config['mappings'] = {
@@ -47,6 +47,4 @@ config['mappings'] = {
 
 # this option wont change the uri (which is the base of this option and can be mapped and stripped above),
 # it will only change/strip/shorten the path facet in the interactive navigation of the user interface
-#config['facet_path_strip_prefix'] = [ "file:///mnt/mymountpoint/", "file://" ]
-
-config['facet_path_strip_prefix'] = [ "file:///media/sf_", "file://" ]
+#config['facet_path_strip_prefix'] = [ "file:///home/", "file://" ]
