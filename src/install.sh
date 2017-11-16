@@ -67,6 +67,7 @@ service solr stop
 
 # Add (optional shared) folder for index
 mkdir /media/sf_index
+mkdir /media/sf_index/tmp
 
 # link Solr index to shared folder
 rm -r /var/solr/data/core1/data
@@ -99,4 +100,10 @@ apt-get clean
 # delete installation sources and this script
 rm -r /usr/src/customize
 
+# delete deleted data on filesystem by filling up ueros, which will increase compression rate on appliance export
+dd if=/dev/zero of=/ZEROS bs=1M
+sync
+rm -f /ZEROS
+
+# shutdown ready build VM
 systemctl poweroff
