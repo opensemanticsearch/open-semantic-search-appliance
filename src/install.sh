@@ -91,9 +91,6 @@ sh /tmp/cdrom/VBoxLinuxAdditions.run
 usermod -a -G vboxsf solr
 usermod -a -G vboxsf opensemanticetl
 
-# install Scrapy
-pip3 install scrapy
-
 # delete apt package cache
 apt-get clean
 
