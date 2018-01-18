@@ -12,12 +12,12 @@ export SYSTEMD_PAGER=""
 
 # update package lists and sources to contrib and non-free
 cat <<EOF > ${rootdir}/etc/apt/sources.list
-deb http://ftp2.de.debian.org/debian/ stable main contrib non-free
+deb http://deb.debian.org/debian/ stable main contrib non-free
 deb http://security.debian.org/ stable/updates main contrib non-free
 EOF
 
 apt-get update
-
+apt-get upgrade
 
 # configure debconf options
 echo 'Debconf'
@@ -56,6 +56,11 @@ done
 echo "Installing packages from packagelists: ${packagesparams}"
 apt-get -y install ${packagesparams}
 
+# mount and install VM guest additions
+mkdir /tmp/cdrom
+mount /dev/cdrom /tmp/cdrom
+sh /tmp/cdrom/VBoxLinuxAdditions.run || exit
+
 # install custom packages
 dpkg --install /usr/src/customize/packages.chroot/*.deb
 
@@ -81,11 +86,6 @@ cp -a /usr/src/customize/includes.chroot/* /
 
 # copy files for language to root dir
 cp -a /usr/src/customize/includes.chroot.${localization}/* /
-
-# mount VM guest additions
-mkdir /tmp/cdrom
-mount /dev/cdrom /tmp/cdrom
-sh /tmp/cdrom/VBoxLinuxAdditions.run
 
 # add solr and user to group vboxsf, so they have access to shared folders of host system
 usermod -a -G vboxsf solr
