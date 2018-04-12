@@ -1,8 +1,7 @@
 curl
 poppler-utils
 tesseract-ocr
-tesseract-ocr-eng
-tesseract-ocr-deu
+tesseract-ocr-all
 scantailor
 apache2
 swapspace
