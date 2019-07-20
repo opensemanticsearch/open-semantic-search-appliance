@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 localization="en"
 # localization="de"
@@ -15,6 +15,9 @@ cat <<EOF > ${rootdir}/etc/apt/sources.list
 deb http://deb.debian.org/debian/ stable main contrib non-free
 deb http://security.debian.org/ stable/updates main contrib non-free
 EOF
+
+# wait until network / dns is up
+until $(ping -c1 deb.debian.org &>/dev/null); do :; done
 
 apt-get update
 apt-get upgrade
