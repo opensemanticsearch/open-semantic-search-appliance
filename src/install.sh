@@ -28,7 +28,7 @@ apt-get -y install linux-image-amd64 linux-headers-amd64 build-essential module-
 # mount VM guest additions
 mkdir /tmp/cdrom
 mount /dev/cdrom /tmp/cdrom
-sh /tmp/cdrom/VBoxLinuxAdditions.run || exit
+sh /tmp/cdrom/VBoxLinuxAdditions.run
 umount /dev/cdrom
 
 # install first, so later no problems
