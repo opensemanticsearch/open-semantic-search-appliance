@@ -1,26 +1,20 @@
-# open-semantic-search-appliance
- Open Semantic Search Appliance (VM)
+# Open Semantic Search Appliance (VM)
 
-Dependecies:
+Open Semantic Search Server as Debian based virtual machine for Virtual Box
 
-Debian package Open Semantic Search Server
 
-Virtual Box guest additions 
+# Dependecies
 
-Build:
+- Debian package Open Semantic Search Server open-semantic-search_xx.xx.xx.deb in src/packages.chroot
 
-Copy semantic search debian package to the path src/packages.chroot
+- Virtual Box
+- Virtual Box guest additions ISO
 
-Run the build script.
+- Debian package vmdebootstrap (Installation: "apt-get install vmdebootstrap")
 
-Add an Virtual Box setup for the VM image
 
-Config VM system settings like RAM and how many CPUs to use
+# Build
 
-Config the Virtual Box guest additions as CD ROM
+- Download / copy Open Semantic Search Server Debian package open-semantic-search_xx.xx.xx.deb to the path src/packages.chroot
 
-Run this VM so installation within VM environment start
-
-After installation the VM will shutdown.
-
-Export appliance.
+- Run the build script as root
