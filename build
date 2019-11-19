@@ -2,11 +2,51 @@
 
 image="open-semantic-search"
 imagesize="60G"
+
+# temporary Virtual Box VM name while build
+VMNAME=OpenSemanticSearchBuildVM$$
+
+# install Debian to image file and run vmdebootstrap customize script
 vmdebootstrap --verbose --image=${image}.img --size=${imagesize} --enable-dhcp --grub --sparse --sudo --configure-apt --customize=./customize/customize.sh
 
-#convert raw image to vdi for less file size
+# convert raw image to vdi for less file size
 echo 'Convert Image file to VirtualBox format'
 qemu-img convert -f raw -O vdi ${image}.img ${image}.vdi
 
-# Now boot the VM image, so internal /usr/src/customize/install.sh which needs full environment of guest system will run within VM
+# remove old format
+rm ${image}.img
+
+# Create Virtual Box VM
+VBoxManage createvm --name ${VMNAME} --ostype Debian_64 --register
+
+# set vCPUs and virtual RAM
+VBoxManage modifyvm ${VMNAME} --cpus 2 --memory 5000 --vram 16
+
+# set build image file as virtual HD
+VBoxManage storagectl ${VMNAME} --name "IDE Controller" --add ide --bootable on
+VBoxManage storageattach ${VMNAME} --storagectl "IDE Controller" --port 0 --device 0 --type hdd --medium ${image}.vdi
+
+# set virtual CDROM to Virtual Box guest additions so we can install them in VM
+VBoxManage storageattach ${VMNAME} --storagectl "IDE Controller" --port 0 --device 1 --type dvddrive --medium /usr/share/virtualbox/VBoxGuestAdditions.iso
+
+# Now start the VM image, so internal /usr/src/customize/install.sh which needs full environment of guest system will run within VM
 # The script will install Virtualbox extensions and dependencies of Open Semantic Search server package, than delete itself and halt the VM
+VBoxManage startvm ${VMNAME} --type headless
+
+# wait until VM shut down
+echo "Waiting until VM installed packages and shuts down"
+while VBoxManage showvminfo --machinereadable ${VMNAME} | grep --quiet 'VMState="running"';
+do
+  sleep 3
+done
+
+# remove no more used virtual CD with Virtual Box additions so it will not be shipped in appliance export and not be indexed on booting the search VM
+VBoxManage storageattach ${VMNAME} --storagectl "IDE Controller" --port 0 --device 1 --type dvddrive --medium emptydrive
+
+# set vCPUs and virtual RAM
+VBoxManage modifyvm ${VMNAME} --cpus 4 --memory 7000 --vram 16
+
+# export appliance
+echo "Exporting Appliance"
+VBoxManage export ${VMNAME} --output ${image}.ova --options manifest,nomacs --vsys 0 --vmname "Open Semantic Search" --product "Open Semantic Search" --producturl https://opensemanticsearch.org
+
