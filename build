@@ -7,14 +7,14 @@ imagesize="60G"
 VMNAME=OpenSemanticSearchBuildVM$$
 
 # install Debian to image file and run vmdebootstrap customize script
-vmdebootstrap --verbose --image=${image}.img --size=${imagesize} --enable-dhcp --grub --sparse --sudo --configure-apt --customize=./customize/customize.sh
+vmdebootstrap --verbose --image=${VMNAME}.img --size=${imagesize} --enable-dhcp --grub --sparse --sudo --configure-apt --customize=./customize/customize.sh
 
 # convert raw image to vdi for less file size
 echo 'Convert Image file to VirtualBox format'
-qemu-img convert -f raw -O vdi ${image}.img ${image}.vdi
+qemu-img convert -f raw -O vdi ${VMNAME}.img ${VMNAME}.vdi
 
 # remove old format
-rm ${image}.img
+rm ${VMNAME}.img
 
 # Create Virtual Box VM
 VBoxManage createvm --name ${VMNAME} --ostype Debian_64 --register
@@ -24,7 +24,7 @@ VBoxManage modifyvm ${VMNAME} --cpus 2 --memory 5000 --vram 16
 
 # set build image file as virtual HD
 VBoxManage storagectl ${VMNAME} --name "IDE Controller" --add ide --bootable on
-VBoxManage storageattach ${VMNAME} --storagectl "IDE Controller" --port 0 --device 0 --type hdd --medium ${image}.vdi
+VBoxManage storageattach ${VMNAME} --storagectl "IDE Controller" --port 0 --device 0 --type hdd --medium ${VMNAME}.vdi
 
 # set virtual CDROM to Virtual Box guest additions so we can install them in VM
 VBoxManage storageattach ${VMNAME} --storagectl "IDE Controller" --port 0 --device 1 --type dvddrive --medium /usr/share/virtualbox/VBoxGuestAdditions.iso
