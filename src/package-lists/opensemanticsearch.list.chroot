@@ -4,7 +4,6 @@ tesseract-ocr
 tesseract-ocr-all
 scantailor
 apache2
-swapspace
 python3-pip
 lsof
 pdftk
