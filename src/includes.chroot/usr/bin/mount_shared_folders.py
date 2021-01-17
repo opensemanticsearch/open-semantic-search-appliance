@@ -13,7 +13,7 @@ def get_shared_folders(only_automounted=False):
 
 	# get sharedfolder names from Virtual Box command line tool VBoxControl
 	if only_automounted:
-		lines = subprocess.check_output(['VBoxControl', '--nologo', 'sharedfolder', 'list', '-automount'])
+		lines = subprocess.check_output(['VBoxControl', '--nologo', 'sharedfolder', 'list', '--automount'])
 	else:
 		lines = subprocess.check_output(['VBoxControl', '--nologo', 'sharedfolder', 'list'])
 	lines = lines.decode('utf-8').split("\n")
